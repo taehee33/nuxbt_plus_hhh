@@ -289,6 +289,6 @@ dist_release/nuxbt-macos-vm-webapp-YYYY-MM-DD.tar.gz
 
 ## 10. 관련 문서
 
-1. [Usage-Guide-ko.md](/Users/hantaehee/Desktop/파일/개발/닌텐도/2/nuxbt-main/docs/Usage-Guide-ko.md)
-2. [Windows-and-macOS-Installation.md](/Users/hantaehee/Desktop/파일/개발/닌텐도/2/nuxbt-main/docs/Windows-and-macOS-Installation.md)
-3. [README.md](/Users/hantaehee/Desktop/파일/개발/닌텐도/2/nuxbt-main/README.md)
+1. [Usage-Guide-ko.md](./Usage-Guide-ko.md)
+2. [Windows-and-macOS-Installation.md](./Windows-and-macOS-Installation.md)
+3. [README.md](../README.md)
