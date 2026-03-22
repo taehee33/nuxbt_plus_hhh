@@ -13,6 +13,7 @@ jobs:
     steps:
       - name: Generate token
         id: generate_token
+        if: ${{ secrets.APP_ID != '' && secrets.APP_PRIVATE_KEY != '' }}
         uses: actions/create-github-app-token@v1
         with:
           app-id: ${{ secrets.APP_ID }}
@@ -21,7 +22,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          token: ${{ steps.generate_token.outputs.token }}
+          token: ${{ steps.generate_token.outputs.token || github.token }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -110,7 +111,7 @@ jobs:
 
       - name: Upload Release Assets
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.generate_token.outputs.token || github.token }}
         run: |
           gh release upload ${{ github.event.release.tag_name }} dist/nuxbt_*.deb dist/nuxbt-*.rpm
 

@@ -110,6 +110,11 @@ nuxbt toggle
 ### Windows and macOS
 
 See the installation guide [here.](docs/Windows-and-macOS-Installation.md)
+ 
+Additional detailed Korean documents:
+
+- Usage guide: [docs/Usage-Guide-ko.md](docs/Usage-Guide-ko.md)
+- Improvement notes: [docs/Improvement-Notes-ko.md](docs/Improvement-Notes-ko.md)
 
 For the VirtualBox + Vagrant workflow, a practical browser entrypoint is:
 
