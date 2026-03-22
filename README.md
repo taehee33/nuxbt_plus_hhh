@@ -113,8 +113,15 @@ See the installation guide [here.](docs/Windows-and-macOS-Installation.md)
  
 Additional detailed Korean documents:
 
+- Quickstart: [docs/QUICKSTART-ko.md](docs/QUICKSTART-ko.md)
 - Usage guide: [docs/Usage-Guide-ko.md](docs/Usage-Guide-ko.md)
 - Improvement notes: [docs/Improvement-Notes-ko.md](docs/Improvement-Notes-ko.md)
+
+For the fastest first-run path on macOS:
+
+```bash
+zsh scripts/start_macos_vm_webapp.sh
+```
 
 For the VirtualBox + Vagrant workflow, a practical browser entrypoint is:
 
