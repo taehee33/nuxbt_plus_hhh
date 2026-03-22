@@ -137,6 +137,8 @@ python3 scripts/host_usb_bridge.py
 
 This exposes the host USB device list on `http://127.0.0.1:8765/api/usb-host` so the web UI can show which USB Bluetooth dongle VirtualBox has captured.
 
+If you create local release archives under `dist_release/`, it is usually better to keep that directory as a local-only packaging area and add it to `.gitignore` later, rather than tracking generated `.tar.gz` artifacts in Git history.
+
 ## Development and Contributing
 
 NUXBT uses a Python backend and a React (TypeScript + Vite) frontend.
