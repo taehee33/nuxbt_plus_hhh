@@ -173,6 +173,29 @@ function App() {
   const currentController = selectedController ? controllers[selectedController] : null;
   const selectedAdapter = adapters.find((adapter) => adapter.path === selectedAdapterPath) ?? null;
 
+  const normalizeUsbId = (value?: string | null) => value?.trim().toLowerCase() ?? null;
+
+  const findMatchingHostUsbDevice = (adapter: BluetoothAdapter | null) => {
+    if (!adapter) {
+      return null;
+    }
+
+    const adapterVendorId = normalizeUsbId(adapter.vendor_id);
+    const adapterProductId = normalizeUsbId(adapter.product_id);
+
+    if (!adapterVendorId || !adapterProductId) {
+      return null;
+    }
+
+    return hostUsbDevices.find((device) => {
+      const hostVendorId = normalizeUsbId(device.vendor_id);
+      const hostProductId = normalizeUsbId(device.product_id);
+      return hostVendorId === adapterVendorId && hostProductId === adapterProductId;
+    }) ?? null;
+  };
+
+  const selectedAdapterHostUsbDevice = findMatchingHostUsbDevice(selectedAdapter);
+
   return (
 <div className="min-h-screen bg-lavender-50 dark:bg-[#1a1a2e] text-slate-900 dark:text-lavender-100 font-sans selection:bg-honey-200 selection:text-honey-900 transition-colors duration-300">
       <header className="bg-white/80 dark:bg-[#252540]/90 backdrop-blur-md border-b border-lavender-200 dark:border-slate-800 py-4 sticky top-0 z-10 transition-colors duration-300">
@@ -241,6 +264,16 @@ function App() {
                       ? `Uses: ${selectedAdapter.alias || selectedAdapter.name || selectedAdapter.path.split('/').pop()}`
                       : 'No adapter selected'}
                 </span>
+                {selectedAdapterHostUsbDevice ? (
+                  <div className="mt-3 text-center text-[11px] text-slate-400 dark:text-slate-500">
+                    <div>
+                      Host USB: {selectedAdapterHostUsbDevice.product_name ?? 'Unknown USB Device'}
+                    </div>
+                    <div>
+                      Capture State: {selectedAdapterHostUsbDevice.current_state ?? 'Unknown'}
+                    </div>
+                  </div>
+                ) : null}
             </button>
 
             <div className="w-full md:w-80 bg-white dark:bg-[#252540] rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 overflow-hidden text-left">
@@ -275,7 +308,10 @@ function App() {
                                 </div>
                             ) : null}
 
-                            {adapters.map((adapter) => (
+                            {adapters.map((adapter) => {
+                                const matchingHostUsbDevice = findMatchingHostUsbDevice(adapter);
+
+                                return (
                                 <div
                                     key={adapter.path}
                                     className={`rounded-xl border px-3 py-3 transition-colors ${
@@ -354,6 +390,16 @@ function App() {
                                         <div>
                                             Recommendation: {adapter.recommendation_reason}
                                         </div>
+                                        {matchingHostUsbDevice ? (
+                                            <>
+                                                <div>
+                                                    Host USB Device: {matchingHostUsbDevice.product_name ?? 'Unknown USB Device'}
+                                                </div>
+                                                <div>
+                                                    Host Capture State: {matchingHostUsbDevice.current_state ?? 'Unknown'}
+                                                </div>
+                                            </>
+                                        ) : null}
                                     </div>
                                     <div className="mt-3 flex items-center justify-between gap-3">
                                         <div className="text-[11px] text-slate-400 dark:text-slate-500 break-all">
@@ -372,7 +418,7 @@ function App() {
                                         </button>
                                     </div>
                                 </div>
-                            ))}
+                            )})}
                         </>
                     )}
                 </div>
